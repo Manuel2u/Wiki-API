@@ -59,6 +59,19 @@ app.route("/articles")
 
 ////////////////// Making Request to a specific article ///////////////////////
 
+app.route("/articles/:specificArticle")
+
+.get(function(req, res){
+    const specificArticle = req.params.specificArticle;
+    
+    Article.findOne({title : specificArticle}, function(err, foundArticles){
+        if(!err){
+            res.send(foundArticles)
+        }
+    });
+
+});
+
 
 
 
