@@ -70,9 +70,52 @@ app.route("/articles/:specificArticle")
         }
     });
 
+})
+
+.put(function(req, res){
+
+    Article.replaceOne(
+        {title :  req.params.specificArticle},
+        {title : req.body.title, content : req.body.content},
+        {overwrite : true},
+        function(err){
+            if(!err){
+                res.send("Succesfully Updated");
+            }
+
+        }
+    );
+
+})
+
+.patch(function(req, res){
+    const specificArticle = req.params.specificArticle;
+
+    Article.updateMany(
+        {title : specificArticle},
+        {$set : req.body},
+        function(err){
+            if(!err){
+                res.send("Succesfully updated");
+            }else{
+                res.send(err);
+            }
+        } 
+    );
+})
+
+.delete(function(req, res){
+    const specificArticle = req.params.specificArticle;
+
+    Article.deleteOne(
+        {title : specificArticle},
+        function(err){
+            if(!err){
+                res.send("Succesfully Deleted");
+            }
+        }
+    )
 });
-
-
 
 
 
